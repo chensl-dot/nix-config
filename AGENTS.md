@@ -18,6 +18,8 @@
 
 The flake exports checks, formatter, and dev shell only for `aarch64-darwin`. A default `nix flake check` on Linux is not evidence that the Darwin checks ran. Evaluation requires access to the private `mysecrets` input; report unavailable checks rather than changing inputs to bypass access failures.
 
+Cloud Agent VMs are Linux. `just eval` loads there, but it does not finish: Catppuccin's starship module reads a theme file built by an `aarch64-darwin` derivation, and that output is not on cache.nixos.org. Host fields that do not force the theme still evaluate: hostname, primary user, and whether Home Manager manages Git and SSH. `mysecrets` is a private fetch of `maolonglong/nix-secrets`. The Cloud Agent GitHub credential cannot read it. Do not override that input.
+
 - Host-specific Nix changes: evaluate the affected host. Shared Nix or flake changes: evaluate both `work-mbp` and `personal-mba`. Run `just c` on a supported environment; build affected hosts when evaluation alone cannot validate the change.
 - Automation changes: use the checks in its nested guidance; unrelated Nix checks are not required.
 - Documentation-only changes: check the diff and any changed paths or commands; no Nix evaluation or build is required.

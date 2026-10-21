@@ -1,5 +1,8 @@
 set ignore-comments
 
+# `build` exists only on macOS. An unconditional alias makes `just` refuse
+# to load this file on Linux, including `just eval`.
+[macos]
 alias b := build
 alias c := check
 
